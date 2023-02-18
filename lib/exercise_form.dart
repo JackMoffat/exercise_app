@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:csv/csv.dart';
+import 'csv_util.dart';
 
 class ExerciseForm extends StatefulWidget {
   final String exercise;
@@ -161,12 +161,6 @@ class _ExerciseFormState extends State<ExerciseForm> {
 
 }
 
-Future<List<dynamic>> readCsvData() async {
-  final csvData = await rootBundle.loadString('assets/exercise_parameters.csv');
-  final List<List<dynamic>> csvTable = CsvToListConverter().convert(csvData);
-  final defaultValues = csvTable[1]; // so for each exercise, this is where the rows would come from....
-  return defaultValues;
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -174,12 +168,12 @@ void main() async {
 
   runApp(MaterialApp(
     home: ExerciseForm(
-      exercise: defaultValues[0],
+      exercise: defaultValues[0].toString(),
       sets: defaultValues[1].toString(),
       weight: defaultValues[2].toString(),
-      intensity: defaultValues[3],
+      intensity: defaultValues[3].toString(),
       rest: defaultValues[4].toString(),
-      tempo: defaultValues[5],
+      tempo: defaultValues[5].toString(),
     ),
   ));
 }

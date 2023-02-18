@@ -129,7 +129,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
         }
       }
     }
-    Navigator.pop(context, _savedValues);
+    // Navigator.pop(context, _savedValues);
   }
 
 
@@ -142,13 +142,6 @@ class _ExerciseFormState extends State<ExerciseForm> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Set ${_savedValues.indexOf(_savedValues.last) + 1} of ${_savedValues.length}',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
           Expanded(
             child: PageView.builder(
               itemCount: _formKeys.length,
@@ -171,7 +164,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
 Future<List<dynamic>> readCsvData() async {
   final csvData = await rootBundle.loadString('assets/exercise_parameters.csv');
   final List<List<dynamic>> csvTable = CsvToListConverter().convert(csvData);
-  final defaultValues = csvTable[1];
+  final defaultValues = csvTable[1]; // so for each exercise, this is where the rows would come from....
   return defaultValues;
 }
 

@@ -4,16 +4,16 @@ import 'package:csv/csv.dart';
 
 class ExerciseForm extends StatefulWidget {
   final String exercise;
-  // final String sets;
+  final String sets;
   final String weight;
   final String intensity;
   final String rest;
   final String tempo;
 
   ExerciseForm({
-    required Key key,
+    Key? key,
     required this.exercise,
-    // required this.sets,
+    required this.sets,
     required this.weight,
     required this.intensity,
     required this.rest,
@@ -26,10 +26,10 @@ class ExerciseForm extends StatefulWidget {
 
 class _ExerciseFormState extends State<ExerciseForm> {
   // Define a list of form keys to keep track of the form state for each page
-  List<GlobalKey<FormState>> _formKeys;
+  late List<GlobalKey<FormState>> _formKeys;
 
   // Define a list to keep track of the form state for each page
-  List<Map<String, dynamic>> _savedValues;
+  late List<Map<String, dynamic>> _savedValues;
 
   @override
   void initState() {
@@ -50,68 +50,122 @@ class _ExerciseFormState extends State<ExerciseForm> {
     );
   }
 
+
+  Widget _buildForm(BuildContext context, int index) {
+    return Form(
+      key: _formKeys[index],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              'Set ${index + 1}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(16.0),
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Exercise',
+                  ),
+                  initialValue: _savedValues[index]['exercise'],
+                  onSaved: (value) =>
+                  _savedValues[index]['exercise'] = value,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Weight',
+                  ),
+                  initialValue: _savedValues[index]['weight'],
+                  onSaved: (value) => _savedValues[index]['weight'] = value,
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Intensity',
+                  ),
+                  initialValue: _savedValues[index]['intensity'],
+                  onSaved: (value) =>
+                  _savedValues[index]['intensity'] = value,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Rest',
+                  ),
+                  initialValue: _savedValues[index]['rest'],
+                  onSaved: (value) => _savedValues[index]['rest'] = value,
+                  keyboardType: TextInputType.number,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Tempo',
+                  ),
+                  initialValue: _savedValues[index]['tempo'],
+                  onSaved: (value) => _savedValues[index]['tempo'] = value,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _submitForms() {
+    // Validate and save each form
+    for (int i = 0; i < _formKeys.length; i++) {
+      final form = _formKeys[i].currentState;
+      if (form != null) {
+        if (form.validate()) {
+          form.save();
+          _savedValues[i]['exercise'] = _savedValues[i]['exercise'] ?? widget.exercise;
+        }
+      }
+    }
+    Navigator.pop(context, _savedValues);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.exercise),
       ),
-      body: PageView.builder(
-        itemCount: int.parse(widget.sets),
-        itemBuilder: (context, index) {
-          return _buildForm(index);
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Set ${_savedValues.indexOf(_savedValues.last) + 1} of ${_savedValues.length}',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          Expanded(
+            child: PageView.builder(
+              itemCount: _formKeys.length,
+              itemBuilder: (context, index) {
+                return _buildForm(context, index);
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _submitForms,
+        child: Icon(Icons.save),
       ),
     );
   }
 
-  Widget _buildForm(int index) {
-    return Form(
-      key: _formKeys[index],
-      child: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Exercise',
-            ),
-            initialValue: _savedValues[index]['exercise'],
-            onSaved: (value) => _savedValues[index]['exercise'] = value,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Weight',
-            ),
-            initialValue: _savedValues[index]['weight'],
-            onSaved: (value) => _savedValues[index]['weight'] = value,
-            keyboardType: TextInputType.number,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Intensity',
-            ),
-            initialValue: _savedValues[index]['intensity'],
-            onSaved: (value) => _savedValues[index]['intensity'] = value,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Rest',
-            ),
-            initialValue: _savedValues[index]['rest'],
-            onSaved: (value) => _savedValues[index]['rest'] = value,
-            keyboardType: TextInputType.number,
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Tempo',
-            ),
-            initialValue: _savedValues[index]['tempo'],
-            onSaved: (value) => _savedValues[index]['tempo'] = value,
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 Future<List<dynamic>> readCsvData() async {

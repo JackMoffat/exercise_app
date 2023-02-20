@@ -58,10 +58,10 @@ class _ExerciseFormState extends State<ExerciseForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
               'Set ${index + 1}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0,
               ),
@@ -69,10 +69,10 @@ class _ExerciseFormState extends State<ExerciseForm> {
           ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               children: [
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Exercise',
                   ),
                   initialValue: _savedValues[index]['exercise'],
@@ -80,7 +80,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
                   _savedValues[index]['exercise'] = value,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Weight',
                   ),
                   initialValue: _savedValues[index]['weight'],
@@ -88,7 +88,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
                   keyboardType: TextInputType.number,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Intensity',
                   ),
                   initialValue: _savedValues[index]['intensity'],
@@ -96,7 +96,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
                   _savedValues[index]['intensity'] = value,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Rest',
                   ),
                   initialValue: _savedValues[index]['rest'],
@@ -104,7 +104,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
                   keyboardType: TextInputType.number,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Tempo',
                   ),
                   initialValue: _savedValues[index]['tempo'],
@@ -154,7 +154,7 @@ class _ExerciseFormState extends State<ExerciseForm> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _submitForms,
-        child: Icon(Icons.save),
+        child: const Icon(Icons.save),
       ),
     );
   }

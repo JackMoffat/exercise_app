@@ -1,0 +1,3 @@
+* notes
+** on internal structure representation
+- because flutter / dart code isn't capable of reflection(?), to have parameters for upcoming weeks modified by parameters from previous weeks I will need to have an accessible internal representation of the progress over time

@@ -3,12 +3,18 @@
 - because flutter / dart code isn't capable of reflection(?), to have parameters for upcoming weeks modified by parameters from previous weeks I will need to have an accessible internal representation of the progress over time
 https://docs.flutter.dev/development/data-and-backend/json#generating-code-for-nested-classes
 https://codewithandrea.com/articles/parse-json-dart/
+** on jsons
+my interpretation so far is that the final generated JSON would be staggeringly huge
 
 *** flattening
 an exercise, which would have its own number of sets, which is handy for displaying at the outset, on the inside can be flattened down as each set is the base unit. so that eliminates one layer of nesting:
 {exercise: benc
 
 ** on workout structures
+*** nesting
+- sets could be nested within an exercise, but I think this may only be good in a sort of "overview-view", ultimately exercises are best as lists of sets?
+- but no, because I already use exercises as collections of sets at least at present
+- so, at a more basic level, exercises nest within days, which nest within weeks
 *** supersets / alt sets
 supersets and alt sets would likely do best nested
 *** on nonstandard values / descriptions

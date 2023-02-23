@@ -9,7 +9,6 @@ class ExerciseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text(exercise['exercise'])),
       appBar: AppBar(title: Text(exercise['exercise'])),
       body: ExerciseForm(
         exercise: exercise['exercise'],

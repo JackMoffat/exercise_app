@@ -41,6 +41,7 @@ dependencies:
   sqlite3_flutter_libs: 
   path_provider: 
   path: 
+  provider: ^6.0.5
 
 dev_dependencies:
   drift_dev: 
